@@ -28,7 +28,7 @@ public class Storage {
         if (storageManger.root() == null) {
             DataRoot dataRoot = new DataRoot();
             for (int i = 0; i < NUM_ENTRIES; i++) {
-                dataRoot.dataMap1().put("key " + i, "Map1 value " + i);
+                dataRoot.dataMap1().put("key " + i, "Stored value " + i);
             }
             storageManger.setRoot(dataRoot);
             storageManger.storeRoot();
