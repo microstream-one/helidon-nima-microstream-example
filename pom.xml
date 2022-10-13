@@ -5,16 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>example.nima</groupId>
-    <artifactId>example-nima-project</artifactId>
+    <artifactId>example-nima-microstream-project</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Helidon Níma Standalone Example Project</name>
-    <description>Example demonstrating Helidon Níma and advantages of blocking over reactive with project Loom.</description>
+    <name>Helidon Níma with Microstream Example Project</name>
+    <description>Example demonstrating Helidon Níma together with microstream .</description>
 
     <modules>
         <module>nima</module>
-        <module>reactive</module>
     </modules>
 
     <properties>
@@ -209,30 +208,6 @@
         </pluginManagement>
     </build>
     <profiles>
-        <profile>
-            <id>native-image</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.helidon.build-tools</groupId>
-                        <artifactId>helidon-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>native-image</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>io.helidon.integrations.graal</groupId>
-                    <artifactId>helidon-graal-native-image-extension</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
         <profile>
             <id>jlink-image</id>
             <build>

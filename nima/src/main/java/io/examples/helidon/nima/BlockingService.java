@@ -1,24 +1,18 @@
 package io.examples.helidon.nima;
 
-import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import io.helidon.nima.webclient.http1.Http1Client;
+import io.exampel.helidon.microstream.Storage;
 import io.helidon.nima.webserver.http.HttpRules;
 import io.helidon.nima.webserver.http.HttpService;
 import io.helidon.nima.webserver.http.ServerRequest;
 import io.helidon.nima.webserver.http.ServerResponse;
 
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 class BlockingService implements HttpService {
 
-    // we use this approach as we are calling the same service
-    // in a real application, we would use DNS resolving, or k8s service names
-    private static Http1Client client;
-
-    static void client(Http1Client client) {
-        BlockingService.client = client;
-    }
+    private static final Storage storage = new Storage();
 
     @Override
     public void routing(HttpRules httpRules) {
@@ -28,26 +22,13 @@ class BlockingService implements HttpService {
                 .get("/sleep", this::sleep);
     }
 
-    private static Http1Client client() {
-        if (client == null) {
-            throw new RuntimeException("Client must be configured on BlockingService");
-        }
-        return client;
-    }
-
-    private static String callRemote(Http1Client client) {
-        return client.get()
-                .path("/remote")
-                .request(String.class);
-    }
-
     private void sleep(ServerRequest req, ServerResponse res) throws Exception {
         Thread.sleep(1000);
         res.send("finished");
     }
 
     private void one(ServerRequest req, ServerResponse res) {
-        String response = callRemote(client());
+        String response = storage.getRandomValue();
 
         res.send(response);
     }
@@ -58,7 +39,7 @@ class BlockingService implements HttpService {
         var responses = new ArrayList<String>();
 
         for (int i = 0; i < count; i++) {
-            responses.add(callRemote(client));
+            responses.add(storage.getRandomValue());
         }
 
         res.send("Combined results: " + responses);
@@ -71,7 +52,7 @@ class BlockingService implements HttpService {
 
             var futures = new ArrayList<Future<String>>();
             for (int i = 0; i < count; i++) {
-                futures.add(exec.submit(() -> callRemote(client)));
+                futures.add(exec.submit(storage::getRandomValue));
             }
 
             var responses = new ArrayList<String>();

@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>example.nima</groupId>
-        <artifactId>example-nima-project</artifactId>
+        <artifactId>example-nima-microstream-project</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>example-nima-blocking</artifactId>
+    <artifactId>example-nima-microstream-blocking</artifactId>
     <name>Helidon Nima Example</name>
 
     <properties>
@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>one.microstream</groupId>
+            <artifactId>microstream-storage-embedded</artifactId>
+            <version>07.01.00-MS-GA</version>
+        </dependency>
         <dependency>
             <groupId>io.helidon.nima.webserver</groupId>
             <artifactId>helidon-nima-webserver</artifactId>

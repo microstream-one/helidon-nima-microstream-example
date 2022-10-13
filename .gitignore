@@ -83,3 +83,6 @@ jmh-baseline.json
 
 # benchmark results
 nima/tests/benchmark/techempower/results
+
+#microstream storage
+storage/
